@@ -1,0 +1,14 @@
+{% extends "layout/layout_fixed.html" %}
+{% block base_content %}
+    <div class="container">
+        <div class="row">
+            <div class="span10">
+                        <table>
+                            {{ errmsg }}
+                            <a href="{% url profile %}">Profile</a>
+                            <a href="{% url view_assignment %}">View Assignment</a>
+                        </table>
+            </div>
+        </div>
+    </div>
+{% endblock base_content %}

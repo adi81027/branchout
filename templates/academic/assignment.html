@@ -1,0 +1,22 @@
+{% extends "layout/layout_fixed.html" %}
+{% block base_content %}
+    <div class="container">
+        <div class="row">
+            <div class="span10">
+                        <table>
+                             <tr>
+                                 <td><b><u>Name</u></b></td>
+                                 <td><b><u>Description</u></b></td>
+                                 <td><b><u>Content</u></b></td>
+                             </tr>
+                            {% for each in passvalue %}
+                             <tr>
+                                <td><a href="{% url assigndetails %}" >{{  each.name  }}</a></td>
+                                <td><a href="{% url assigndetails %}" >{{  each.description|truncatewords:10  }}</a></td>
+                                <td><a href="{% url assigndetails %}" >{{  each.content }}</a></td>
+                             </tr>
+                         </table>
+            </div>
+        </div>
+    </div>
+{% endblock base_content %}

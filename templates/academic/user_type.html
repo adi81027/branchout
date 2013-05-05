@@ -1,0 +1,16 @@
+{% extends "layout/layout_fixed.html" %}
+{% block base_content %}
+    <div class="container">
+        <div class="row">
+            <div class="span10">
+                <form action="/academic/ut/" method="POST">{% csrf_token %}
+                    {{ errmsg }}
+                    <ul>
+                        <li>{{ l_form.usertype }}</li>
+                        <input type="submit" name='submit' >
+                    </ul>
+                </form>
+            </div>
+        </div>
+    </div>
+{% endblock base_content%}

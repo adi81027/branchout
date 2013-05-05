@@ -1,0 +1,36 @@
+{% extends "layout/pg_base.html" %}
+{% block css %}
+    <link href="{{MEDIA_URL}}assets/css/bootstrap.css" rel="stylesheet">
+	<link href="{{MEDIA_URL}}assets/css/bootstrap-responsive.css" rel="stylesheet">
+	<link href="{{MEDIA_URL}}assets/css/style.css" rel="stylesheet">
+	<link href="{{MEDIA_URL}}assets/css/jqueryui.css" rel="stylesheet">
+	
+    <link rel="stylesheet" type="text/css" href="http://fonts.googleapis.com/css?family=Droid+Sans:400,700">
+    <link rel="stylesheet" type="text/css" href="http://fonts.googleapis.com/css?family=Droid+Serif">
+    <link rel="stylesheet" type="text/css" href="http://fonts.googleapis.com/css?family=Boogaloo">
+    <link rel="stylesheet" type="text/css" href="http://fonts.googleapis.com/css?family=Economica:700,400italic">
+	
+    <!--<link rel="shortcut icon" href="{{MEDIA_URL}}assets/ico/favicon.ico">-->
+    <link rel="apple-touch-icon-precomposed" sizes="144x144" href="{{MEDIA_URL}}assets/ico/apple-touch-icon-144-precomposed.png">
+    <link rel="apple-touch-icon-precomposed" sizes="114x114" href="{{MEDIA_URL}}assets/ico/apple-touch-icon-114-precomposed.png">
+    <link rel="apple-touch-icon-precomposed" sizes="72x72" href="{{MEDIA_URL}}assets/ico/apple-touch-icon-72-precomposed.png">
+    <link rel="apple-touch-icon-precomposed" href="{{MEDIA_URL}}assets/ico/apple-touch-icon-57-precomposed.png">
+    {% block css.shared %}
+    {% endblock css.shared %}
+    {% block css.custom %}
+    {% endblock css.custom %}
+{% endblock css%}
+
+{% block js %}
+    <script src="{{MEDIA_URL}}assets/js/jquery.js"></script>
+    <script src="{{MEDIA_URL}}assets/js/jqueryui.js"></script>
+    <script src="{{MEDIA_URL}}assets/js/bootstrap.js"></script>
+    <script src="{{MEDIA_URL}}assets/js/flexslider.js"></script>
+    <script src="{{MEDIA_URL}}assets/js/carousel.js"></script>
+    <script src="{{MEDIA_URL}}assets/js/custom.js"></script>
+  
+    {% block js.shared %}
+    {% endblock js.shared %}
+    {% block js.custom %}
+    {% endblock js.custom %}
+{% endblock js%}

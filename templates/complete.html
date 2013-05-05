@@ -1,0 +1,32 @@
+{% extends "layout/layout_fixed.html" %}
+{% block metainfo%}
+    <title>{% block title %}User test{% endblock %}</title>
+{% endblock metainfo%}
+{% block base_content %}
+    <div class="container-fluid">
+        <div class="row-fluid">
+            {% block left %}
+                {% include 'left.html' %}
+            {% endblock %}
+            {% block right %}
+                {% include 'right.html' %}
+                <div id="content2">
+                    {% block content2 %}
+                        <script src="{{MEDIA_URL}}assets/js/reload.js"></script>
+                        <h2>
+                            you have successfully completed your questionnaire!!!
+                        </h2>
+                        <h4>
+                            If you change your email address in the meantime, contact us please.
+                        </h4>
+                    {% endblock %}
+                </div>
+            {% endblock %}
+        </div><!--/row-->
+    </div>
+    <hr>
+    <footer>
+        <p>&copy; Company 2012</p>
+    </footer>
+    </div>
+{% endblock base_content %}

@@ -1,0 +1,218 @@
+{% extends "layout/layout_fixed.html" %}
+{% load markup questionnaire i18n %}
+{% block metainfo%}
+    <!-- <title>User test</title> -->
+{% endblock metainfo%}
+{% block headextra %}
+    <script type="text/javascript" src="{{ STATIC_URL }}jquery.min.js"></script>
+    <script type="text/javascript" src="{{ STATIC_URL }}questionset.js"></script>
+    <link rel="stylesheet" href="{{ STATIC_URL }}progressbar.css">
+
+    {% for x in jsinclude %}
+        <script type="text/javascript" src="{{ x }}"></script>
+    {% endfor %}
+
+    {% for x in cssinclude %}
+        <link rel="stylesheet" href="{{ x }}" type="text/css" />
+    {% endfor %}
+
+    {% if async_progress %}
+        <script type="text/javascript">
+            var progress_url = "{{ async_url }}";
+        </script>
+        <script type="text/javascript" src="{{ STATIC_URL }}progress.js"></script>
+    {% endif %}
+{% endblock %}
+
+{% block css.custom %}
+    <link rel="stylesheet" href="{MEDIA_URL}assets/css/bootstrap.css" />
+    <link rel="stylesheet" href="{MEDIA_URL}assets/css/bootstrap-responsive.css" />
+    <link rel="stylesheet" href="{MEDIA_URL}assets/ico/favicon.ico" />
+    <link rel="stylesheet" href="{MEDIA_URL}assets/css/style.css" />
+    <link rel="stylesheet" href="{{ STATIC_URL }}progressbar.css">
+    {% for x in cssinclude %}
+        <link rel="stylesheet" href="{{ x }}" type="text/css" />
+    {% endfor %}
+
+
+{% endblock css.custom%}
+{% block js.custom %}
+    <script type="text/javascript" src="{{ STATIC_URL }}jquery.min.js"></script>
+    <script type="text/javascript" src="{{ STATIC_URL }}questionset.js"></script>
+    <script type="text/javascript" src="{MEDIA_URL}/assets/js/jquery.js"></script>
+    <script  type="text/javascript" src="{MEDIA_URL}/assets/js/reload.js"></script>
+
+    <script src="{MEDIA_URL}/assets/js/bootstrap-transition.js"></script>
+    <script src="{MEDIA_URL}/assets/js/bootstrap-alert.js"></script>
+    <script src="{MEDIA_URL}/assets/js/bootstrap-modal.js"></script>
+    <script src="{MEDIA_URL}/assets/js/bootstrap-dropdown.js"></script>
+    <script src="{MEDIA_URL}/assets/js/bootstrap-scrollspy.js"></script>
+    <script src="{MEDIA_URL}/assets/js/bootstrap-tab.js"></script>
+    <script src="{MEDIA_URL}/assets/js/bootstrap-tooltip.js"></script>
+    <script src="{MEDIA_URL}/assets/js/bootstrap-popover.js"></script>
+    <script src="{MEDIA_URL}/assets/js/bootstrap-button.js"></script>
+    <script src="{MEDIA_URL}/assets/js/bootstrap-collapse.js"></script>
+    <script src="{MEDIA_URL}/assets/js/bootstrap-carousel.js"></script>
+    <script src="{MEDIA_URL}/assets/js/bootstrap-typeahead.js"></script>
+    {% for x in jsinclude %}
+        <script type="text/javascript" src="{{ x }}"></script>
+    {% endfor %}
+    {% if async_progress %}
+        <script type="text/javascript">
+            var progress_url = "{{ async_url }}";
+        </script>
+        <script type="text/javascript" src="{{ STATIC_URL }}progress.js"></script>
+    {% endif %}
+{% endblock %}
+
+{% block base_content %}
+    <div class="container-fluid">
+        <div class="row-fluid">
+            <div class="span3">
+                <div class="well sidebar-nav">
+                    <ul class="nav nav-list">
+                        <li class="nav-header"><i class="icon-user icon-white"></i>My Account</li>
+                        <li class="active"><a href="#">Link</a></li>
+                        <li><a href="">Link</a></li>
+                        <li><a href="#">Link</a></li>
+                        <li><a href="#">Link</a></li>
+                        <li class="nav-header"><i class="icon-list-alt icon-white"></i>Questionnaire</li>
+
+                        <li><a href="/complete/" id="assign">Complete</a></li>
+
+
+                        <li><a href="/attempt/">Pending</a></li>
+
+
+
+                        <li class="nav-header">Sidebar</li>
+                        <li><a href="#">Link</a></li>
+                        <li><a href="#">Link</a></li>
+                        <li><a href="#">Link</a></li>
+                    </ul>
+                </div><!--/.well -->
+            </div><!--/span-->
+            <div class="span9">
+                {% block content %}
+
+                    {% if progress %}
+                        <div id="progress_bar" class="ui-progress-bar ui-container">
+                            <div class="ui-progress" style="width: {{progress}}%;">
+                                <span class="ui-label"><b class="value">{{progress}}%</b></span>
+                            </div>
+                        </div>
+                    {% endif %}
+                    <div class="questionset-title">
+                        {{ questionset.text|textile }}
+                    </div>
+
+                    <form name="qform" id="qform" action="{{ request.path }}" method="POST">
+
+                        {% csrf_token %}
+
+                        <input type="hidden" name="questionset_id" value="{{ questionset.id }}">
+
+                        {% for question, qdict in qlist %}
+                            {% with errors|dictget:question.number as error %}
+
+                                <div class="question type_{{ qdict.qtype }} {% if error %} error prepend-top{% endif %}{{ qdict.qnum_class }}{{ qdict.qalpha_class }}" id="qc_{{ question.number }}" {{qdict.checkstring|safe}}>
+                                    {% if request.user.is_staff %}
+                                        <span class="pull-right">
+                        <a href="/admin/questionnaire/question/{{ question.id }}/">
+                            ({% trans "edit" %} {{ question.number }})
+                        </a>
+                    </span>
+                                    {% endif %}
+
+                                    {% if qdict.custom %}
+                                        {% if error %}
+                                            <div class="error">
+                                                {{ error }}
+                                            </div>
+                                        {% endif %}
+                                        {% include qdict.template %}
+                                    {% else %}
+                                        <div class="question-text {% if qdict.required %}required{% endif %}">
+                                            <span class="qnumber">{{ question.display_number }}.</span>
+                                            {{ question.text }}
+                                        </div>
+                                        <div class="answer">
+                                            {% if error %}
+                                                <div class="alert-message block-message error input"><strong>{{ error }}</strong></div>
+                                            {% endif %}
+                                            {% include qdict.template %}
+                                        </div>
+                                    {% endif %}
+                                </div> <!-- /question container -->
+                                {% if question.footer %}
+                                    <div class="question-footer">
+                                        {{ question.footer|textile }}
+                                        <div class="clearfix"></div>
+                                    </div>
+                                {% endif %}
+                            {% endwith %}
+                        {% endfor %}
+
+
+
+                        <div style="text-align: center;" class="well questionset-submit">
+                            <input class="btn large primary" name="submit" type="submit" value="{% trans "Continue" %}">
+
+                        </div>
+
+                        {% if questionset.prev %}
+                            <a class="back-link pull-left" href="javascript:history.back();">{% trans "return to previous page" %}</a>
+                        {% endif %}
+                    </form>
+
+                    <script type="text/javascript">
+                        {% for trigger in triggers %}
+                            addtrigger("{{trigger}}");
+                        {% endfor %}
+
+                        {% for k,v in qvalues.items %}
+                            qvalues['{{ k|escapejs }}'] = '{{ v|escapejs }}';
+                        {% endfor %}
+
+                        for(key in qvalues) {
+                            valchanged(key, qvalues[key]);
+                        }
+                    </script>
+                {% endblock %}
+
+                <div class="row-fluid">
+                    <div class="span4">
+
+                    </div><!--/span-->
+                    <div class="span4">
+
+                    </div><!--/span-->
+                    <div class="span4">
+
+                    </div><!--/span-->
+                </div><!--/row-->
+                <div class="row-fluid">
+                    <div class="span4">
+
+                    </div><!--/span-->
+                    <div class="span4">
+
+                    </div><!--/span-->
+                    <div class="span4">
+
+                    </div><!--/span-->
+                </div><!--/row-->
+            </div><!--/span-->
+        </div><!--/row-->
+
+        <hr>
+
+        <footer>
+            <p>&copy; Company 2012</p>
+        </footer>
+
+    </div>
+
+
+
+{% endblock base_content %}

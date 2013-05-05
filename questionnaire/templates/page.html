@@ -1,0 +1,45 @@
+{% extends "layout/layout_fixed.html" %}
+{% load markup %}
+{% block metainfo%}
+    <title>{% block title1 %}User test{% endblock %}</title>
+{% endblock metainfo%}
+{% block base_content %}
+    <div class="container-fluid">
+        <div class="row-fluid">
+            {% block left %}
+                {% include 'left.html' %}
+            {% endblock %}
+            {% block right %}
+                {% include 'right.html' %}
+                <div id="content2">
+                    {% block content2 %}
+                        <script src="{{MEDIA_URL}}assets/js/reload.js"></script>
+
+
+                        <div id="title">
+                            {% block title %}
+                                {{ block.super }} - {{ page.title }}
+                            {% endblock %}
+                        </div>
+                        <div id="content3">
+                            {% block content3 %}
+                                {{ page.body|textile }}
+                                {% if user.is_authenticated %}
+                                    <a href="/admin/page/page/{{ page.slug }}/"></a>
+                                {% endif %}
+                            {% endblock %}
+                        </div>
+
+                    {% endblock %}
+
+                </div>
+            {% endblock %}
+        </div><!--/row-->
+    </div>
+    <hr>
+    <footer>
+        <p>&copy; Company 2012</p>
+    </footer>
+    </div>
+{% endblock base_content %}
+

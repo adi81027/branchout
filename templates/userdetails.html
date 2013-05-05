@@ -1,0 +1,26 @@
+{% extends "layout/layout_fixed.html" %}
+{% block base_content %}
+    <div class="container">
+        <div class="row">
+            <div class="span10">
+                    <h2>auth user</h2>
+                    check this
+                    <ul>
+                        {% for user in object_list %}
+                            <li>{{ user.username }}</li>
+                        {% endfor %}
+                    </ul>
+            </div>
+        </div>
+    </div>
+{% endblock base_content %}
+
+{% block content %}
+    <h2>auth user</h2>
+    check this
+    <ul>
+        {% for user in object_list %}
+            <li>{{ user.username }}</li>
+        {% endfor %}
+    </ul>
+{% endblock %}

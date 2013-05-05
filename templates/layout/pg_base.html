@@ -1,0 +1,142 @@
+{% block doctype %}
+<!DOCTYPE html>
+{% endblock doctype %}
+<html lang="en">
+    <head>
+  	{% block head %}
+	    {% block metainfo%}
+		    <meta charset="utf-8">
+			<title>
+				Title of the Page
+			</title>
+		    <meta name="viewport" content="">
+		    <meta name="description" content="">
+		    <meta name="author" content="">
+		{% endblock metainfo%}
+
+    {% endblock head %}
+    
+    {% block css %}{% endblock css%}
+    </head>
+    <body>
+       <div id="wrapper">
+       
+       <div class="container">
+       {% block siteheader%}
+                   {% include 'layout/header.html' %}
+       {% endblock siteheader%}
+    	{% block nav_bar%}
+           <div class="navbar navbar-inverse">
+              <div class="navbar-inner">
+                <div class="container">
+                  <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+
+                  </a>
+
+                  <ul class="nav prettyprint">
+                         {% if user.is_authenticated %}
+                            <li>Hi Welcome {{request.user.username}}</li>
+                         {% else %}
+                             <li></li>
+                         {% endif %}
+                  </ul>  
+                  <div class="nav-collapse collapse">
+                    {% block navoptions %}
+                        <ul class ="nav">
+                                  <li class="active"><a href="#">Home</a></li>
+                                  <li><a href="#about">About</a></li>
+                                  <li><a href="#contact">Contact</a></li>
+                                  
+                                  <li class="dropdown">
+                                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">Dropdown <b class="caret"></b></a>
+                                    <ul class="dropdown-menu">
+                                      <li><a href="#">Action</a></li>
+                                      <li><a href="#">Another action</a></li>
+                                      <li><a href="#">Something else here</a></li>
+                                      <li class="divider"></li>
+                                      <li class="nav-header">Nav header</li>
+                                      <li><a href="#">Separated link</a></li>
+                                      <li><a href="#">One more separated link</a></li>
+                                    </ul>
+                                  </li>
+                                <li><a href="#New User">SignUp</a></li>
+                        </ul>
+                    {% endblock navoptions%}
+                            {% if user.is_authenticated %}
+
+                                <ul class="nav pull-right">
+                                  <li><a href="/accounts/logout"><i class="icon-lock icon-white"></i>&nbsp;&nbsp;Logout</a></li>
+                                  <li><a href="{% url myaccount %}"><i class="icon-user icon-white"></i>&nbsp;&nbsp;My Account</a></li>
+                                  <!--<li class="dropdown"><a href="accounts/password/change/" class="dropdown-toggle" data-toggle="dropdown"><i class="icon-user icon-white"></i>&nbsp;&nbsp;My Account</a>
+                                            <ul class="dropdown-menu">
+                                              <li><a href="#">Settings</a></li>
+                                              <li><a href="/accounts/password/change/">
+                                                   Change Password</a> 
+                                               </li>
+                                            </ul>  
+                                  </li>-->
+                                  
+                                  
+                                </ul>
+
+                            {% else %}
+                                <ul class="nav pull-right">
+                                  <li><a href="/accounts/register"><i class="icon-user icon-white"></i>&nbsp;&nbsp;Signup</a></li>
+                                  <li><a href="/accounts/login/?next=/"><i class="icon-lock icon-white"></i>&nbsp;&nbsp;Login</a></li>
+                                </ul>
+                            {% endif %}
+                   <!-- REMOVED THE LOGIN FROM THE NAVIGATOR SCREEN -- 25 Sep 2012
+                      <form class="navbar-form pull-right">
+                      <input class="span2" type="text" placeholder="Email">
+                      <input class="span2" type="password" placeholder="Password">
+                      <button type="submit" class="btn">Sign in</button>
+                    </form>
+                    -->
+                  </div><!--/.nav-collapse -->
+                </div>
+              </div>
+            </div>
+            {% endblock nav_bar%}
+            </div>
+    	
+          
+        {% block header %}{% endblock header %}
+        {% block base_content %}
+        {% endblock base_content%}
+        {% block home_page_left %}
+        {% endblock home_page_left%}
+        {% block home_page_right %}
+        {% endblock home_page_right%} 
+        {% block section_left_content %}
+        {% endblock section_left_content %}
+        {% block contact_address %}
+        {% endblock contact_address %}
+                        
+        <div class="container">
+        <div id="footer">
+             {% block footercontainer%}{% endblock footercontainer%}
+        </div>
+        </div>
+        
+        </div> <!--End of the tag wrapper-->
+        
+        <!-- start: Copyright -->
+        <div id="copyright"> 
+            <div class="container">
+                <div class="sixteen columns">
+                    <p>
+                        &copy;2012, LittleBoxes , Powered By GreyHound
+                    <img style="margin-top:-4px" alt="" src="">
+                    </p>
+                </div>
+            </div>
+        </div>
+         <!-- end: Copyright -->
+    {% block js %}
+    {% endblock js%}
+    </body>
+</html>
+

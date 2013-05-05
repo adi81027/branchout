@@ -1,0 +1,29 @@
+{% extends "layout/layout_fixed.html" %}
+{% block base_content %}
+    <div class="container">
+        <div class="row">
+            <div class="span10">
+                        <form action="/academic/profile/" method="POST">{% csrf_token %}
+                            {{ errmsg }}
+                            <ul>
+                                <li>"Student ID"      {{ stu_form.student_id }}</li>
+                                <li>"First Name"      {{ stu_form.first_name }}</li>
+                                <li>"Middle Name"     {{ stu_form.mid_name }}</li>
+                                <li>"Last Name"       {{ stu_form.last_name }}</li>
+                                <li>"Email"           {{ stu_form.email }}</li>
+                                <li>"DOB(yyyy-mm-dd)  {{ stu_form.dob }}</li>
+                                <li>"Age"             {{ stu_form.age }}</li>
+                                <li>"Gender"          {{ stu_form.gender }}</li>
+                                <li>"Institute"       {{ stu_form.institute }}</li>
+                                <li>"Course"          {{ stu_form.courses }}</li>
+                                <li>"Class"           {{ stu_form.classes}}</li>
+                                <li>"User"            {{ stu_form.users }}</li>
+                
+                
+                                <input type="submit" name='submit' >
+                            </ul>
+                        </form>
+            </div>
+        </div>
+    </div>
+{% endblock base_content %}

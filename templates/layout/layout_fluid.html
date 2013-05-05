@@ -1,0 +1,14 @@
+{% extends "layout/pg_base_extend.html" %}
+{% block body %}
+<div class="container-fluid">
+   {% block body_containter %}
+		  	{% block fluid_content %}
+		    {% endblock fluid_content %}
+   {% endblock body_containter %}
+	{% block footer %}
+	<footer>
+	<p>&copy; Company 2012</p>
+	</footer>
+	{% endblock footer %}
+</div>
+{% endblock body %}
